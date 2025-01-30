@@ -4,12 +4,11 @@ from polymorphic.admin import PolymorphicParentModelAdmin, PolymorphicChildModel
 from .models import User, Student, Teacher
 
 
-# ✅ Parent Admin (for User)
 @admin.register(User)
 class UserAdmin(PolymorphicParentModelAdmin, BaseUserAdmin):
     """Admin panel for the base User model (handles polymorphism)."""
     base_model = User
-    child_models = [Student, Teacher]  # Specify child models explicitly
+    child_models = [Student, Teacher]  
     list_display = ("username", "is_active", "is_staff", "date_joined")
     search_fields = ("username",)
     ordering = ("-date_joined",)
@@ -21,7 +20,6 @@ class UserAdmin(PolymorphicParentModelAdmin, BaseUserAdmin):
     )
 
 
-# ✅ Child Admin (for Student)
 @admin.register(Student)
 class StudentAdmin(PolymorphicChildModelAdmin):
     """Admin panel for Student model."""
@@ -37,7 +35,6 @@ class StudentAdmin(PolymorphicChildModelAdmin):
     )
 
 
-# ✅ Child Admin (for Teacher)
 @admin.register(Teacher)
 class TeacherAdmin(PolymorphicChildModelAdmin):
     """Admin panel for Teacher model."""
