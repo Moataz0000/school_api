@@ -34,6 +34,8 @@ INSTALLED_APPS = [
     'accounts',
     
     'rest_framework',
+    'drf_yasg',
+
 ]
 
 
@@ -123,3 +125,15 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+# settings.py
+REST_FRAMEWORK = {
+    'DEFAULT_VERSIONING_CLASS': 'rest_framework.versioning.URLPathVersioning',  
+    'ALLOWED_VERSIONS': ['v1', 'v2'],
+    'DEFAULT_VERSION': 'v1',
+    
+    'DATETIME_FORMAT': "%Y-%m-%d %H:%M:%S", 
+    'DATE_FORMAT': "%Y-%m-%d",  
+    'TIME_FORMAT': "%H:%M:%S", 
+}
