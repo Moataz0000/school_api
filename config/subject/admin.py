@@ -15,6 +15,12 @@ class SubjectAdmin(admin.ModelAdmin):
     list_display = ('title', 'created_at', 'is_active')  
     list_filter = ('is_active', 'created_at')  
     search_fields = ('title',)  
+
+    @admin.register(Subject)
+class SubjectAdmin(admin.ModelAdmin):
+    list_display = ('title', 'created_at', 'is_active')  
+    list_filter = ('is_active', 'created_at') 
+    search_fields = ('title',) 
     ordering = ('-created_at',)
     fieldsets = (
         ("Basic Info", {"fields": ("title", "is_active")}),
@@ -33,7 +39,6 @@ class CourseAdmin(admin.ModelAdmin):
         ("Status", {"fields": ("is_active",)}),
     )
     inlines = [ModuleInline]  
-
 
 @admin.register(Module)
 class ModuleAdmin(admin.ModelAdmin):
