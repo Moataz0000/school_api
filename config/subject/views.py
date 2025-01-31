@@ -1,13 +1,13 @@
 from rest_framework import generics
 from .serializers import SubjectSerializer
-from .repository import SubjectRepo
+from .repository import ManageSubject
 from rest_framework.response import Response
 from rest_framework import status
 
 
 
 class SubjectListView(generics.ListCreateAPIView):
-    queryset = SubjectRepo.get_all_avaliable_subject()
+    queryset = ManageSubject.get_all_available_subjects()
     serializer_class = SubjectSerializer
     
     
@@ -16,16 +16,21 @@ class SubjectListView(generics.ListCreateAPIView):
 
 
 class SubjectUpdateRetrieve(generics.RetrieveUpdateDestroyAPIView):
-    queryset = SubjectRepo.get_all_avaliable_subject()
+    queryset = ManageSubject.get_all_available_subjects()
     serializer_class = SubjectSerializer
     lookup_field = 'id'
     
     
     def destroy(self, request, *args, **kwargs):
-        instance = self.get_object()
-        self.perform_destroy(instance)
-        return Response(
-            {"message": f"Subject '{instance.title}' has been successfully deleted."},
-            status=status.HTTP_204_NO_CONTENT
-        )
-    
+        subject_id = self.kwargs.get('id')
+        is_deleted = ManageSubject.delete_subject(subject_id)
+        if is_deleted:
+            return Response(
+                {"message": f"Subject has been successfully deleted."},
+                status=status.HTTP_204_NO_CONTENT
+            )
+        else:
+            return Response(
+                {"error": "Subject not found."},
+                status=status.HTTP_404_NOT_FOUND
+            )
