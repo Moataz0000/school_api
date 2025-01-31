@@ -1,6 +1,6 @@
 from .models import Subject
 from rest_framework import serializers
-from .repository import SubjectRepo
+from .repository import ManageSubject
 
 
 
@@ -21,13 +21,15 @@ class SubjectSerializer(serializers.ModelSerializer):
             
         
     def create(self, validated_data):
-        return SubjectRepo.add_subject(**validated_data)
+        return ManageSubject.add_subject(**validated_data)
     
     
     def update(self, instance, validated_data):
-        subject = SubjectRepo.modify_subject(
+        subject = ManageSubject.modify_subject(
             pk=instance.id, 
             title=validated_data.get("title", instance.title),
             is_active=validated_data.get("is_active", instance.is_active)
         )
         return subject
+
+
