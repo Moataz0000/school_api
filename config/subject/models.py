@@ -71,4 +71,13 @@ class Content(Base):
     
     def __str__(self):
         return self.module.name
-    
+
+
+class Enrollment(Base):
+    course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='enrollments')
+    student = models.ForeignKey(Student, on_delete=models.CASCADE, related_name='enrollments')
+
+
+
+    def __str__(self):
+        return f'{self.student.username} Enrolled {self.course.title}'

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Subject, Course, Module, Content
+from .models import Subject, Course, Module, Content, Enrollment
 
 class ModuleInline(admin.TabularInline):  
     model = Module
@@ -9,7 +9,14 @@ class ContentInline(admin.TabularInline):
     model = Content
     extra = 1
 
+
 @admin.register(Subject)
+class SubjectAdmin(admin.ModelAdmin):
+    list_display = ('title', 'created_at', 'is_active')  
+    list_filter = ('is_active', 'created_at')  
+    search_fields = ('title',)  
+
+    @admin.register(Subject)
 class SubjectAdmin(admin.ModelAdmin):
     list_display = ('title', 'created_at', 'is_active')  
     list_filter = ('is_active', 'created_at') 
@@ -41,8 +48,14 @@ class ModuleAdmin(admin.ModelAdmin):
     ordering = ('-created_at',)
     inlines = [ContentInline]  
 
+
 @admin.register(Content)
 class ContentAdmin(admin.ModelAdmin):
     list_display = ('module', 'created_at')
     search_fields = ('module__name',)
     ordering = ('-created_at',)
+
+
+@admin.register(Enrollment)
+class EnrollmentAdmin(admin.ModelAdmin):
+    list_display = ['course', 'student', 'created_at', 'is_active']
