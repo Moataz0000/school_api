@@ -35,6 +35,8 @@ INSTALLED_APPS = [
     
     'rest_framework',
     'drf_yasg',
+    'rest_framework_simplejwt',
+
 
 ]
 
@@ -136,4 +138,8 @@ REST_FRAMEWORK = {
     'DATETIME_FORMAT': "%Y-%m-%d %H:%M:%S", 
     'DATE_FORMAT': "%Y-%m-%d",  
     'TIME_FORMAT': "%H:%M:%S", 
+    
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    )
 }

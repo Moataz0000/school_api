@@ -3,15 +3,14 @@ from .serializers import SubjectSerializer
 from .repository import ManageSubject
 from rest_framework.response import Response
 from rest_framework import status
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
 
 
 class SubjectListView(generics.ListCreateAPIView):
     queryset = ManageSubject.get_all_available_subjects()
     serializer_class = SubjectSerializer
-    
-    
-
+    permission_classes = [IsAuthenticatedOrReadOnly]
 
 
 
